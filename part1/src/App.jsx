@@ -1,49 +1,47 @@
 const Header = (props) => {
   return (
-    <h1>{props.course}</h1>
+    <h1>{props.course.name}</h1>
   )
 }
 
 const Part = (props) => {
   return (
-    <p>{props.part} - {props.units}</p>
+    <p>{props.part.name} - {props.part.units}</p>
   )
 }
 
 const Content = (props) => {
   return (
     <div>
-      <Part part={props.part1} units={props.units1} />
-      <Part part={props.part2} units={props.units2} />
-      <Part part={props.part3} units={props.units3} />
+      <Part part={props.course.parts[0]} />
+      <Part part={props.course.parts[1]} />
+      <Part part={props.course.parts[2]} />
     </div>
   )
 }
 
 const Total = (props) => {
+  const total = props.course.parts[0].units + props.course.parts[1].units + props.course.parts[2].units
   return (
-    <p>Number of units {props.units1 + props.units2 + props.units3}</p>
+    <p>Number of units {total}</p>
   )
 }
 
 const App = () => {
-  const course = 'CSIT340 Industry Elective 1'
-  const part1 = 'CSIT321 Application Development'
-  const units1 = 3
-  const part2 = 'CSIT327 Information Management 2'
-  const units2 = 3
-  const part3 = 'IT365 Data Analytics'
-  const units3 = 3
+  const course = {
+    name: 'CSIT340 Industry Elective 1',
+    parts: [
+      { name: 'CSIT321 Application Development', units: 3 },
+      { name: 'CSIT327 Information Management 2', units: 3 },
+      { name: 'IT365 Data Analytics', units: 3 }
+    ]
+  }
 
   return (
     <div>
       <Header course={course} />
-      <Content
-        part1={part1} units1={units1}
-        part2={part2} units2={units2}
-        part3={part3} units3={units3}
-      />
-      <Total units1={units1} units2={units2} units3={units3} />
+      <Content course={course} />
+      <Total course={course} />
     </div>
   )
 }
