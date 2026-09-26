@@ -13,17 +13,25 @@ const Part = ({ part }) => {
 const Content = ({ course }) => {
   return (
     <div>
-      <Part part={course.parts[0]} />
-      <Part part={course.parts[1]} />
-      <Part part={course.parts[2]} />
+      {course.parts.map(part =>
+        <Part key={part.name} part={part} />
+      )}
     </div>
   )
 }
 
 const Total = ({ course }) => {
-  const total = course.parts[0].units + course.parts[1].units + course.parts[2].units
+  const total = course.parts.reduce((sum, part) => sum + part.units, 0)
   return (
     <p>Number of units {total}</p>
+  )
+}
+
+const Footer = ({ name, code, section }) => {
+  return (
+    <footer>
+      <p>{name} - {code} - {section}</p>
+    </footer>
   )
 }
 
@@ -37,11 +45,16 @@ const App = () => {
     ]
   }
 
+  const studentName = 'Jelian Limetares'
+  const courseCode = 'CSIT340'
+  const section = 'G7'
+
   return (
     <div>
       <Header course={course} />
       <Content course={course} />
       <Total course={course} />
+      <Footer name={studentName} code={courseCode} section={section} />
     </div>
   )
 }
